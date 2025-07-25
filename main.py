@@ -64,21 +64,21 @@ def test(model : nn.Module, env, n_epoch):
         writer.add_scalar('Test/Return', ret, ei)
 
 if __name__ == '__main__':
-    args = parser.parse()
+    config = parser.parse()
 
-    env = get_env(args.env.name, args)
-    model = get_model(args.model.name, args, env)
+    env = get_env(config.env.name, config)
+    model = get_model(config.model.name, config, env)
 
-    if args.load_state or args.test_mod:
-        state = torch.load(f"weights/DQN_state_dict_{args.load_number}.pt", DEVICE)
+    if config.load_state or config.test_mod:
+        state = torch.load(f"weights/DQN_state_dict_{config.load_number}.pt", DEVICE)
         model.load_state_dict(state)
     
     try:
-        if args.test_mode:
-            test(model, env, args.test.n_epochs)
+        if config.test_mode:
+            test(model, env, config.test.n_epochs)
         else:
-            optimizer = torch.optim.Adam(model.parameters(), args.learning_rate)
-            train(model, optimizer, env, args.train.n_epoch)
+            optimizer = torch.optim.Adam(model.parameters(), config.learning_rate)
+            train(model, optimizer, env, config.train.n_epoch)
     
     finally:
         env.close()

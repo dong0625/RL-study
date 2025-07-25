@@ -1,12 +1,11 @@
 import torch
 
-import gymnasium
 import matplotlib.pyplot as plt
 
 from importlib import import_module
 
 class Env:
-    def __init__(self, *args):
+    def __init__(self, config):
         self.env = self.state_space = self.action_space = self.fig = self.ax = None
 
     def render(self):
@@ -31,7 +30,7 @@ class Env:
         if self.fig != None:
             plt.close(self.fig)
 
-def get_env(env_name, args) -> Env:
-    env_module = import_module(env_name)
-    env = env_module.Env(args)
+def get_env(config) -> Env:
+    env_module = import_module(config.name)
+    env = getattr(env_module, config.name)(config)
     return env
