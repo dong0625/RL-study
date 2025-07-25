@@ -5,7 +5,7 @@ from torch.utils.tensorboard import SummaryWriter
 from datetime import datetime
 
 import parser
-from model.model import get_model
+from model.base import get_model
 from env.env import get_env
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -28,7 +28,8 @@ def train(model : nn.Module, optimizer : torch.optim.Optimizer, env, n_epoch):
             action = model.get_action(state)
 
             next_state, reward, terminated, trucated, _ = env.step(action)
-            frame = (state, action, reward, next_state, done := terminated or trucated)
+            done = terminated or trucated
+            frame = (state, action, reward, next_state, terminated)
 
             loss = model.get_loss(*frame)
             optimizer.zero_grad()
