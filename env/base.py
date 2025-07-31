@@ -18,9 +18,7 @@ class Env:
         plt.pause(0.01) 
 
     def reset(self):
-        state, _ = self.env.reset()
-        state = torch.tensor(state)
-        return state
+        return self.env.reset()
     
     def step(self, action):
         return self.env.step(action)
@@ -31,6 +29,6 @@ class Env:
             plt.close(self.fig)
 
 def get_env(config) -> Env:
-    env_module = import_module(config.name)
+    env_module = import_module(f"..{config.name}", package=__name__)
     env = getattr(env_module, config.name)(config)
     return env

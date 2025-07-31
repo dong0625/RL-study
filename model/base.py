@@ -16,7 +16,7 @@ class Model(nn.Module):
         pass
 
 def get_model(config, env) -> Model:
-    model_module = import_module(config.name)
+    model_module = import_module(f"..{config.name}", package=__name__)
     model = getattr(model_module, config.name)(config, env)
 
     return model
