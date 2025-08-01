@@ -21,7 +21,7 @@ import random
 
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-class Qnetwork(nn.Module):
+class DQN(nn.Module):
     def __init__(self, input_shape, output_space):
         super().__init__()
 
@@ -52,7 +52,7 @@ class Qnetwork(nn.Module):
         out = self.fc(out)
         return out
     
-class DQN(Model):
+class DQNAgent(Model):
     def __init__(self, config, env):
         super().__init__(config, env)
 
@@ -60,8 +60,8 @@ class DQN(Model):
         self.state_shape = env.state_shape
         self.action_space = env.action_space
 
-        self.behavior_network = Qnetwork(self.state_shape, self.action_space)
-        self.target_network = Qnetwork(self.state_shape, self.action_space)
+        self.behavior_network = DQN(self.state_shape, self.action_space)
+        self.target_network = DQN(self.state_shape, self.action_space)
         
         self.update_n = 0
 
