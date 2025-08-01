@@ -38,8 +38,8 @@ class Qnetwork(nn.Module):
             nn.Flatten()
             )
 
-        dummy = self.conv(torch.zeros(1, *input_shape)).view(-1)
-        self.fc_input_size = dummy.shape[0]
+        dummy = self.conv(torch.zeros(1, *input_shape))
+        self.fc_input_size = dummy.shape[1]
         
         self.fc = nn.Sequential(
             nn.Linear(self.fc_input_size, 512),

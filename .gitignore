@@ -3,3 +3,5 @@ weights/
 runs/
 
 .vscode/
+
+debugging.py

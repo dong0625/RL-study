@@ -44,7 +44,7 @@ def train(model : nn.Module, optimizer : torch.optim.Optimizer, env, steps):
             ret = total_loss = episode_length = 0
 
         if step_i % 100000 == 0:
-            pt = f"weights/{config.model.name}_state_dict.pt"
+            pt = f"weights/{model.__class__.__name__}_state_dict.pt"
             torch.save(model.state_dict(), pt)
 
 def test(model : nn.Module, env, n_episode):

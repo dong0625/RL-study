@@ -29,7 +29,7 @@ class ReplayBuffer:
         self.ptr += 1
 
     def sample(self, batch_size):
-        if self.ptr > self.learning_starts:
+        if self.ptr < self.learning_starts:
             return None
         indices = np.random.randint(0, len(self), size=batch_size)
         
