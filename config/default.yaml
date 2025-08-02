@@ -1,7 +1,7 @@
 model:
   name: "DQN"
   batch_size: 32
-  gamma: 1
+  gamma: 0.99
   initial_eps: 1.0
   final_eps: 0.1
   final_eps_step: 1000000
@@ -19,4 +19,4 @@ test:
   n_episode: 10
 
 load_state: False
-test_mode: False
+test_mode: True

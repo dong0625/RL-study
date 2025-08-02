@@ -99,7 +99,7 @@ class DQNAgent(Model):
         pred_Q = self.behavior_network(states)
         pred = torch.gather(pred_Q, 1, actions.unsqueeze(1)).squeeze(-1)
 
-        loss = F.mse_loss(pred, y)
+        loss = F.smooth_l1_loss(pred, y)
 
         self.update()
         return loss

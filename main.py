@@ -37,7 +37,7 @@ def train(model : nn.Module, optimizer : torch.optim.Optimizer, env, steps):
         total_loss += loss.item()
         episode_length += 1
 
-        if done:
+        if done or step_i == steps - 1:
             writer.add_scalar('Train/Loss', total_loss / episode_length, step_i)
             writer.add_scalar('Train/Reward', ret, step_i)
             next_state, _ = env.reset()
@@ -73,7 +73,7 @@ if __name__ == '__main__':
     model = get_model(config.model, env).to(DEVICE)
 
     if config.load_state or config.test_mode:
-        state = torch.load(f"weights/{config.model.name}_state_dict.pt", weights_only=True)
+        state = torch.load(f"weights/{model.__class__.__name__}_state_dict.pt", weights_only=True)
         model.load_state_dict(state)
     
     try:

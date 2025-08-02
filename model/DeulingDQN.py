@@ -30,7 +30,7 @@ class DeulingDQN(DQN):
         out = self.conv(x)
         state_value = self.state_value_fc(out)
         advantage = self.fc(out)
-        Q_value = state_value + advantage
+        Q_value = state_value + (advantage - advantage.mean(-1))
         return Q_value
     
 class DeulingDQNAgent(DQNAgent):
